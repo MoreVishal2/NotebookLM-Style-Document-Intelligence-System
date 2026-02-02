@@ -48,26 +48,3 @@ class FAISSVectorStore:
                 results.append(self.text_chunks[idx])
 
         return results
-
-
-# Example usage (for testing)
-if __name__ == "__main__":
-    from embeddings.embedder import TextEmbedder
-
-    embedder = TextEmbedder()
-    store = FAISSVectorStore(embedding_dim=384)
-
-    chunks = [
-        "artificial intelligence enables machines to think",
-        "deep learning uses neural networks",
-        "faiss is used for similarity search"
-    ]
-
-    embeddings = embedder.embed_texts(chunks)
-    store.add_embeddings(embeddings, chunks)
-
-    query = "what is deep learning"
-    query_embedding = embedder.embed_query(query)
-
-    results = store.similarity_search(query_embedding)
-    print(results)

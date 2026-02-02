@@ -31,12 +31,3 @@ def chunk_text(
             start = 0
 
     return chunks
-
-
-# Example usage (for testing)
-if __name__ == "__main__":
-    sample_text = " ".join([f"word{i}" for i in range(1, 2000)])
-    chunks = chunk_text(sample_text)
-
-    print(f"Total chunks: {len(chunks)}")
-    print("First chunk:", chunks[0][:300])

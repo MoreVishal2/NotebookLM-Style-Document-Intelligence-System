@@ -44,10 +44,3 @@ def load_document(file_path: str) -> str:
 
     else:
         raise ValueError("Unsupported file format. Use PDF or TXT.")
-
-
-# Example usage (for testing)
-if __name__ == "__main__":
-    path = "C:\\Users\\Admin\\Desktop\\LLM project\\data\\uploads\\Practical Machine Learning.pdf"
-    text = load_document(path)
-    print(text[:1000])  # print first 1000 characters

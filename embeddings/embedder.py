@@ -30,18 +30,3 @@ class TextEmbedder:
         )
         return embedding
 
-
-# Example usage (for testing)
-if __name__ == "__main__":
-    embedder = TextEmbedder()
-
-    sample_chunks = [
-        "machine learning is a subset of artificial intelligence",
-        "deep learning uses neural networks with many layers"
-    ]
-
-    embeddings = embedder.embed_texts(sample_chunks)
-    query_embedding = embedder.embed_query("what is deep learning")
-
-    print(f"Embeddings shape: {embeddings.shape}")
-    print(f"Query embedding length: {len(query_embedding)}")

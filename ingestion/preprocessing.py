@@ -19,11 +19,3 @@ def clean_text(text: str) -> str:
 
     return text.strip()
 
-
-# Example usage (for testing)
-if __name__ == "__main__":
-    sample_text = """
-    This is a SAMPLE text!! Visit https://example.com
-    Extra    spaces, symbols ### and new lines.
-    """
-    print(clean_text(sample_text))
