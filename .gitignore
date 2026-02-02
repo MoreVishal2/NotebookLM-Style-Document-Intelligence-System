@@ -1,4 +1,4 @@
-data
+data/
 .vs/
 __pycache__/
 *.pyc
