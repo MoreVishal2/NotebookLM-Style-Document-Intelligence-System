@@ -42,23 +42,39 @@ class GroqGenerator:
     # ---------------------------
     # Query Rewriting (Agent)
     # ---------------------------
-    def rewrite_query(self, query: str) -> str:
+    def rewrite_query(self, query: str, history: List[dict] = None, doc_summary: str = "") -> str:
+        # Format history for the prompt
+        recent_history = ""
+        if history:
+            # Take the last 2-3 exchanges
+            for msg in history[-3:]:
+                role = "User" if msg['role'] == 'user' else "AI"
+                recent_history += f"{role}: {msg['content']}\n"
+
         prompt = f"""
-Rewrite the following question to be precise and optimized
-for retrieving relevant information from a document.
+You are a Query Expansion Agent. Your goal is to rewrite the user's latest question 
+into a standalone, descriptive search query.
 
-Question:
-{query}
+DOCUMENT SUMMARY:
+{doc_summary[:300]}
 
-Rewritten question:
-"""
+RECENT CONVERSATION:
+{recent_history}
+
+TASK:
+- If the user says "explain this" and the last AI response was a specific topic (e.g., Hive), rewrite it as "Explain [Topic] in detail".
+- If the user says "explain this" and there is no previous topic, rewrite it as "Provide a summary of the uploaded document".
+- If the query is ambiguous (e.g., "tell me more"), use the history to make it specific.
+
+User Question: {query}
+Rewritten Standalone Query:"""
+
         response = self.client.chat.completions.create(
             model=self.qa_model,
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.0,
+            temperature=0.2,
         )
-
-        return response.choices[0].message.content.strip()
+        return response.choices[0].message.content.strip()    
 
     # ---------------------------
     # Grounded Answer Generator
